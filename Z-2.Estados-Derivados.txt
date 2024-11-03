@@ -1,0 +1,14 @@
+**************** ESTADOS DERIVADOS ****************
+
+SON VARIABLES PROPIEDADES, CALCULOS QUE HACEMOS APARTIR DE UN ESTADO
+
+
+Los estados derivados en React son valores de estado que dependen de otros estados o propiedades (props) y no necesitan gestionarse de forma independiente, sino que pueden calcularse o derivarse a partir de esos valores ya existentes. Esto ayuda a evitar la duplicación de información y a mantener un estado más simple y eficiente.
+
+¿Cuándo y por qué usar estados derivados?
+Los estados derivados son útiles cuando:
+
+Necesitas calcular un valor en función de otros estados o props.
+Evitas redundancia: en lugar de almacenar múltiples valores de estado que dependen unos de otros, calculas el valor derivado según sea necesario.
+
+

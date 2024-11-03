@@ -1,0 +1,5 @@
+****** PARA INSTALAR ICONOS EN REACT ******************
+React icons: https://react-icons.github.io/react-icons/
+
+******************** INSTALAR CON COMANDOS ****************************
+npm install react-icons --save
