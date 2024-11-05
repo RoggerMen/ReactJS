@@ -7,17 +7,47 @@ import { TodoList } from './TodoList';
 import { TodoItem } from './TodoItem';
 import { CreateTodoButton } from './CreateTodoButton';
 // ESTOS "Todos" LO VOLVEREMOS UN ESTADO QUE NOSOTROS PODAMOS CAMBIAR, COMPARTIR POR TODOS LOS COMPONENETES Y ACTUALIZAR DEPENDIENDO DE LAS INTERACCIONES DE LOS USUARIOS 
-const defaultTodos = [
-  { text: 'Cortar cebolla', completed: true },
-  { text: 'Tomar el Curso de Intro a React.js', completed: false },
-  { text: 'Llorar con la Llorona', completed: false },
-  { text: 'LALALALALA', completed: false },
-  { text: 'Usar Estados Derivados Listos', completed: true }
-];
+
+// const defaultTodos = [
+//   { text: 'Cortar cebolla', completed: true },
+//   { text: 'Tomar el Curso de Intro a React.js', completed: false },
+//   { text: 'Llorar con la Llorona', completed: false },
+//   { text: 'LALALALALA', completed: false },
+//   { text: 'Usar Estados Derivados Listos', completed: true }
+// ];
+
+// // AGREGAMOS NUEVO ELEMENTO AL "localStorage"
+// // CON "setItem()" donde colocaremos el "nombre del item" donde guardaremos informacion en el "localStorage"
+
+// localStorage.setItem("TODOS_V1", JSON.stringify(defaultTodos));
+
+// el "localStorage" NORMALMENTE GENERA ERRORES,PROBLEMAS
+// SI TENEMOS PROBLEMAS CON EL "localStorage" SOLO BORRAMOS EL ELEMENTO
+//localStorage.removeItem("TODOS_V1");
+//window.location.reload();
 
 function App() {
+  // ************* LOCAL STORAGE ****************
+  // OBTENEMOS DEL LOCAL STORAGE EL NOMBRE DE NUESTRO "localStorage" ASIGNADO Q ES "TODOS_V1"
+  const localStorageTodos = localStorage.getItem("TODOS_V1");
+
+  let parsedTodos;
+
+  // SI "localStorageTodos" es null, undefined o no existe en el localStorage 
+// si no hay contenido en "localStorageTodos" es decir si es null, vacio, undefined o cualquier valor que de false, entonces inicializamos "parsedTodos" como un array vacio
+  if(!localStorageTodos) {
+    localStorage.setItem("TODOS_V1", JSON.stringify([]));
+    parsedTodos = [];
+  } else {
+    parsedTodos = JSON.parse(localStorageTodos);
+  }
+
+  // EL "parsedTodos" enviamos como estado inicial a nuestra aplicación
+  //let parsedTodos = JSON.parse(localStorageTodos);
+
+  //************** ESTADOS ***************/
   // NUEVO ESTADO DE "Todos" 
-  const [todos,setTodos] = React.useState(defaultTodos);
+  const [todos,setTodos] = React.useState(parsedTodos);
 
   const [searchValue,setSearchValue] = React.useState("");
 
@@ -45,6 +75,18 @@ function App() {
       //return todo.text.toLowerCase().includes(searchValue.toLowerCase()); 
       }
   );
+
+  // GUARDAMOS los "todos" en el localStorage
+  // OSEA SE GUARDAN EN CACHE SI LE DAMOS CLICK EN EL LIKE O SI ELIMINAMOS LA X SE GRABA Y SI REFRESCAMOS SE QUEDA TAL COMO ESTA SEGUN LO ELIMINADO O LIKEADO
+  const saveTodos = (newTodos) => {
+    // enviamos el nuevo array de "todos"
+    // para que los guarde en el localStorage y en el estado
+    localStorage.setItem("TODOS_V1", JSON.stringify(newTodos));
+    // AQUI GUARDAMOS Y HACEMOS LOS CAMBIOS DEL NUEVO TODO QUE RECIBA Y CON EL "localStorage" HACEMOS LA PERSISTENCIA
+    setTodos(newTodos)
+  }
+
+
 // CREAMOS LA LOGICA PARA COMPLETAR LOS "Todos" PINTAR DE VERDE EL ICONO Y TACHAR EL TEXTO
   const completeTodo = (text) => {
     const newTodos = [...todos];
@@ -52,7 +94,8 @@ function App() {
       (todo) => todo.text == text
     );
     newTodos[todoIndex].completed = true;
-    setTodos(newTodos);
+    // AQUI LLAMAMOS LA FUNCION "saveTodos" QUE TIENE LA PERSISTENCIA DEL "localStorage" Y EL NUEVO ESTADO QUE SE GUARDA EL "setTodos(newTodos)"
+    saveTodos(newTodos);
   };
 
   // LOGICA PARA ELIMINAR EL TEXTO 
@@ -62,7 +105,7 @@ function App() {
       (todo) => todo.text == text
     );
     newTodos.splice(todoIndex, 1);
-    setTodos(newTodos);
+    saveTodos(newTodos);
   };
 
   // DE ESTA MANERA VEMOS COMO SE ESTAN GUARDANDO LOS DATOS CON ESTADOS  
