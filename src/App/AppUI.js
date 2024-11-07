@@ -8,6 +8,8 @@ import { TodosError } from '../TodosError';
 import { EmptyTodos } from '../EmptyTodos';
 import { TodoContext } from '../TodoContext';
 import { useContext } from 'react';
+import { Modal } from '../Modal';
+import { TodoForm } from '../TodoForm';
 // ACA SE ENCUENTRAN TODOS LOS COMPONENTES QUE SON LA PARTE VISUAL QUE VA A RENDERIZARSE EN LA PAGINA
 function AppUI({
     // loading,
@@ -27,6 +29,8 @@ function AppUI({
       searchedTodos,
       completeTodo,
       deleteTodo,
+      openModal,
+      setOpenModal,
   } = useContext(TodoContext);
 
   // DE ESTA MANERA VEMOS COMO SE ESTAN GUARDANDO LOS DATOS CON ESTADOS  
@@ -75,7 +79,16 @@ function AppUI({
         ))}
       </TodoList>
 
-      <CreateTodoButton />
+      <CreateTodoButton
+        setOpenModal={setOpenModal}
+      />
+
+      {openModal && (
+        <Modal >
+          <TodoForm />
+        </Modal>
+      )}
+
     </>
   );
 }

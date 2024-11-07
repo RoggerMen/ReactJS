@@ -21,6 +21,9 @@ function TodoProvider({children}){
 
   const [searchValue,setSearchValue] = React.useState("");
 
+  // ESTADO PARA EL "OPEN MODAL"
+  const [openModal,setOpenModal] = React.useState(false);
+
   // ESTADOS DERIVADOS
    // A ESTA VARIABLE NO PODEMOS ASIGNARLE UN VALOR FIJO EJM: 4 , 17, etc.
   // TENEMOS QUE HACER CALCULO EN ESPECIFICO BASANDONOS EN EL ESTADO ANTERIOR POR EJEMPLO DEL "Todo"
@@ -70,6 +73,16 @@ function TodoProvider({children}){
       }
   );
 
+  // ESTO LO MANDAMOS AL "index.js" DEL MODAL POR MEDIO DEL "useContext" "TodoContext"
+  const addTodo = (text) =>{
+    const newTodos = [...todos];
+    newTodos.push({ 
+      text, 
+      completed: false,
+    });
+    saveTodos(newTodos);
+  }
+
 // CREAMOS LA LOGICA PARA COMPLETAR LOS "Todos" PINTAR DE VERDE EL ICONO Y TACHAR EL TEXTO
   const completeTodo = (text) => {
     const newTodos = [...todos];
@@ -102,6 +115,9 @@ function TodoProvider({children}){
             searchedTodos,
             completeTodo,
             deleteTodo,
+            openModal,
+            setOpenModal,
+            addTodo,
         }}>
             {children}
         </TodoContext.Provider>
