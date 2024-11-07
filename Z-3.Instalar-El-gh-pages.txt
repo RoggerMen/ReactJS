@@ -1,0 +1,34 @@
+
+copiamos el path del index.html de la carpeta build 
+"EL PATH" ESPARA MOSTRAR QUE TODO ESTA BIEN EN PRODUCCION LO COLOCAS EN LA URL SIN EL "index.js" 
+DESPUES DE ESO LO VUELVES A CORRER EL BUILD PARA QUE SE REFRESQUE
+DONDE EN TERMINAL  LE COLOCAS EL "npm run build"
+
+Este path nos servira para colocarlo al "homepage" que colocaremos en el package.json SERA DE LA SGTE MANERA: TU NOMBRE DE USUARIO Y AL FINAL EL NOMBRE DE TU REPOSITORIO
+"homepage":"https://RoggerMen.github.io/ReactJS"
+
+******** INSTALAMOS PARA CARGAR SOLO EL BUILD EN UNA RAMA Y PODER DESPLEGAR *******
+
+*** colocamos en el comando lo SGTE:
+
+npm i --save-dev gh-pages
+
+el "--save-dev" solo se usa en local para hacer el despliegue por eso con esto "--save-dev" la guardamos con dependencia de desarrollo y le colocamos la herramienta "gh-pages"
+
+********* DE AHI EN EL package.json ********
+al agregar esto 
+SE AGREGAN ESA HERRAMIENTA COMO dependencia
+"devDependencies" : {
+    "gh-pages": "^4.0.0",
+}
+
+
+***** SE AGREGARON EN EL package.json "scripts" ******
+
+"predeploy": "npm run build",
+"deploy": "gh-pages -d build",
+
+AL "deploy" LE PUEDES COLOCAR EL NOMBRE QUE QUIERAS Y AL OTRO SOLO LE AUMENTAS EL "pre"
+por EJM: SI ES "listo" el otro sera "prelisto"
+
+MAS QUE TODO EL QUE TIENE EL "pre" ES PARA CUANDO TE OLVIDAS HACER EL "npm run build" y lo haga ya por automatico
